@@ -42,3 +42,14 @@ where e.DepartmentId = d.Id
 group by e.DepartmentId
 ) p
 where em.DepartmentId = p.dId and em.Salary = p.maxSalary
+
+# Write your MySQL query statement below
+select p.dName as Department, em.Name as Employee, em.Salary
+from Employee em,
+(
+select d.Id as dId, d.Name as dName, max(e.Salary) as maxSalary
+from Employee e, Department d
+where e.DepartmentId = d.Id
+group by e.DepartmentId
+) p
+where em.DepartmentId = p.dId and em.Salary = p.maxSalary
