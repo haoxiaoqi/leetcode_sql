@@ -21,3 +21,21 @@ BEGIN
       limit N, 1
   );
 END
+##########################################################
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  RETURN (
+      select Salary
+      from
+      (
+          select Salary, (@rank := @rank + 1) as rank
+          from
+          (
+              select distinct Salary
+              from Employee
+              order by Salary desc
+          ) A, (select @rank := 0) as Init
+      ) as t
+      where rank = N
+  );
+END
